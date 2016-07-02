@@ -41,7 +41,7 @@ var Skipstone = {
 
 	showConfiguration: function() {
 		var data = { players: Skipstone.players };
-		Pebble.openURL('https://ineal.me/pebble/skipstone/configuration/?data=' + encodeURIComponent(base64_encode(JSON.stringify(data))));
+		Pebble.openURL('http://clach04.github.io/pebble/skipstone/?data=' + encodeURIComponent(base64_encode(JSON.stringify(data))));
 	},
 
 	handleConfiguration: function(e) {

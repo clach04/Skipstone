@@ -53,6 +53,17 @@ $(document).bind('pageinit', function() {
 		addNewPanel('New WDTV Remote', $('.panel-template-3').first().clone());
 	});
 
+	function getQueryParam(variable, defaultValue) {
+		var query = location.search.substring(1);
+		var vars = query.split('&');
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split('=');
+			if (pair[0] === variable) {
+				return decodeURIComponent(pair[1]);
+			}
+		}
+		return defaultValue || false;
+	}
 	$('.btn-save').on('click', function() {
 		var players = $.map($('.panel'), function(e) {
 			if ($(e).find('.panel-collapse').attr('id').indexOf('template') != -1)
@@ -66,7 +77,9 @@ $(document).bind('pageinit', function() {
 		var ret = {
 			players: players
 		};
-		document.location = 'pebblejs://close#' + encodeURIComponent(btoa(JSON.stringify(ret)));
+		// Set the return URL depending on the runtime environment (i.e. Pebble or emulator)
+		var return_to = getQueryParam('return_to', 'pebblejs://close#');
+		document.location = return_to + encodeURIComponent(btoa(JSON.stringify(ret)));
 	});
 
 	$('.panel-container').sortable({
